@@ -1,0 +1,23 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Sociala__Web_UI_.Models.UserDetailsViewModel
+
+
+
+    @if (!string.IsNullOrEmpty(Model.Username))
+    {
+
+   
+        <h4 class="d-inline font-xssss mont-font fw-700"> @Model.Username  &nbsp</h4>
+          
+               <div class="d-inline float-right mt-1">
+
+                       <form asp-controller="Account">
+
+                         <button type="submit" asp-controller="Account" asp-action="LogOff" class="btn-danger">&nbsp LogOff &nbsp</button>
+
+                       </form>
+
+             </div>
+
+        
+    }

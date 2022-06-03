@@ -1,0 +1,1281 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Sociala__Web_UI_.Models.PostViewModel
+@{
+
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var post = ViewBag.model as Sociala_Entities.Concrete.DatabaseFirst.Post;
+
+    var user = ViewBag.model as Sociala_Entities.Concrete.DatabaseFirst.User;
+
+
+    var id = ViewBag.IdUser;
+
+    var Username = ViewBag.Username;
+
+    var UserImage = "images/UserProfileImage/" + ViewBag.UserImage;
+
+    var PostImage = "uploads/" + ViewBag.PostImage;
+
+    var PostVideo = "uploads/" + ViewBag.PostVideo;
+
+    var PostDate = ViewBag.PostDate;
+
+    int? IdPost = 0;
+
+    var IdUser = ViewBag.IdUser;
+
+    int? IdTag = 0;
+
+    string path1 = ViewBag.imagePath as string;
+    string path2 = ViewBag.videoPath as string;
+
+
+
+
+    var PostIdForReaction = 0;
+    var UserIdForReaction = 0;
+
+    var reaction_value = 0;
+
+    var PostIdForComment = 0;
+
+    var UserIdForComment = 0;
+
+    foreach (var item_3 in Model.posts)
+    {
+        var PostId = item_3.Id;
+    }
+
+
+    foreach (var item_3 in Model.reactions)
+    {
+        PostIdForReaction = item_3.PostIdForReaction;
+        UserIdForReaction = item_3.UserIdForReaction;
+    }
+
+    foreach (var item_3 in Model.postandTags)
+    {
+        IdPost = item_3.PostIdForPostandTag;
+        IdTag = item_3.TagIdForPostandTag;
+    }
+
+    foreach (var item in Model.comments)
+    {
+        PostIdForComment = item.PostIdForComment;
+        UserIdForComment = item.UserIdForComment;
+    }
+
+
+    //var receiverusermessage = ViewBag.receiverusermessage;
+
+    var SenderUserId=0;
+
+    var ReceiverUserId = 0;
+
+
+
+
+
+}
+
+<link rel="stylesheet" href="~/css/site.css">
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+
+<script src="~/js/site.js"></script>
+<script src="~/js/signalrFunctions.js"></script>
+
+
+
+<div class="preloader"></div>
+
+
+<div id="main" class="main-wrapper">
+
+
+
+    <!-- main content -->
+    <div id="main" class="main-content right-chat-active" onclick="GetUsers();">
+
+        <div class="middle-sidebar-bottom">
+            <div class="middle-sidebar-left">
+                <!-- loader wrapper -->
+                <div class="preloader-wrap p-3">
+                    <div class="box shimmer">
+                        <div class="lines">
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                        </div>
+                    </div>
+                    <div class="box shimmer mb-3">
+                        <div class="lines">
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                        </div>
+                    </div>
+                    <div class="box shimmer">
+                        <div class="lines">
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                            <div class="line s_shimmer"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- loader wrapper -->
+                <div class="row feed-body">
+                    <div class="col-xl-8 col-xxl-9 col-lg-8">
+
+
+                        <div class="card w-100 shadow-none bg-transparent bg-transparent-card border-0 p-0 mb-0">
+                            <div class="owl-carousel category-card owl-theme overflow-hidden nav-none">
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-none rounded-xxxl bg-dark overflow-hidden mb-3 mt-3">
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <span class="btn-round-lg bg-white"><i
+                                                        class="feather-plus font-lg"></i></span>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-700 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Add Story </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3"
+                                        style="background-image: url(~/uitheme.net/sociala/images/s-2.jpg);">
+
+                                        <img src="~/uitheme.net/sociala/images/s-8.jpg">
+
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-12.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Surfiya Zakir </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3"
+                                        style="background-image: url(~/uitheme.net/sociala/images/s-2.jpg);">
+
+                                        <img src="~/uitheme.net/sociala/images/s-8.jpg">
+
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-12.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Surfiya Zakir </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3">
+                                        <video autoplay loop class="float-right w-100">
+                                            <source src="~/uitheme.net/sociala/images/s-4.mp4" type="video/mp4">
+                                        </video>
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-9.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Goria Coast </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3 me-1">
+                                        <video autoplay loop class="float-right w-100">
+                                            <source src="~/uitheme.net/sociala/images/s-3.mp4" type="video/mp4">
+                                        </video>
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-4.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Hurin Seary </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3"
+                                        style="background-image: url(~/uitheme.net/sociala/images/s-5.jpg);">
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-3.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    David Goria </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div data-bs-toggle="modal" data-bs-target="#Modalstory"
+                                        class="card w125 h200 d-block border-0 shadow-xss rounded-xxxl bg-gradiant-bottom overflow-hidden cursor-pointer mb-3 mt-3"
+                                        style="background-image: url(~/uitheme.net/sociala/images/s-6.jpg);">
+                                        <div class="card-body d-block p-3 w-100 position-absolute bottom-0 text-center">
+                                            <a href="#">
+                                                <figure
+                                                    class="avatar ms-auto me-auto mb-0 position-relative w50 z-index-1">
+                                                    <img src="~/uitheme.net/sociala/images/user-2.png" alt="image"
+                                                        class="float-right p-0 bg-white rounded-circle w-100 shadow-xss">
+                                                </figure>
+                                                <div class="clearfix"></div>
+                                                <h4
+                                                    class="fw-600 position-relative z-index-1 ls-1 font-xssss text-white mt-2 mb-1">
+                                                    Seary Victor </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+
+                            <form name="form1" id="form1" class="form-text" method="post" asp-controller="Home"
+                                asp-action="AddPost" role="form" enctype="multipart/form-data">
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+                                <div class="card-body p-0">
+                                    <a type="button" id="addbtn" onclick="Add(@ViewBag.Timer)" style="width:25%"
+                                        class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i
+                                            class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create
+                                        Post</a>
+                                </div>
+                                @*
+                                <input type="text" id="IdPost" name="IdPost" value="@IdPost" />
+                                <input type="text" id="IdTag" name="IdTag" value="@IdTag" />*@
+                                <input type="text" id="Userid" name="Userid" value="@id" />
+                                <input type="text" id="Dateid" name="Dateid" value="@DateTime.Now.ToString()" />
+
+                                <div class="card-body p-0 mt-3 position-relative">
+
+                                    <figure class="avatar position-absolute ms-2 mt-1 top-5">
+                                        <img src="~/images/UserProfileImage/@ViewBag.UserImage" alt="image"
+                                            class="shadow-sm rounded-circle w25 h25 z-depth-5"
+                                            data-holder-rendered="true">
+                                    </figure>
+
+                                    <textarea id="Posttext" name="Posttext"
+                                        class="h100 bor-0 w-100 rounded-xxl p-20 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
+                                        , cols="30" , rows="10" , placeholder="What's on your mind?"></textarea>
+
+
+                                </div>
+
+
+
+
+
+                                <div style="display: flex" class="col-lg-8  col-xs-12 form-group form-check">
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="tag1" name="tag1"
+                                            value="policy">
+                                        <label class="form-check-label" for="tag1"> policy &nbsp; &nbsp;</label>
+                                    </div>
+
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" style=" flex-grow: 1;" class="form-check-input" id="tag2"
+                                            name="tag2" value="economy">
+                                        <label class="form-check-label" for="tag2"> economy &nbsp;</label>
+                                    </div>
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" class="form-check-input" id="tag3" name="tag3"
+                                            value="world">
+                                        <label class="form-check-label" for="tag3"> world &nbsp;</label>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex" class="col-lg-8  col-xs-12 form-group form-check">
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="tag4" name="tag4"
+                                            value="technology">
+                                        <label class="form-check-label" for="tag4"> technology &nbsp;</label>
+                                    </div>
+
+
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" class="form-check-input" id="tag5" name="tag5"
+                                            value="kitchen">
+                                        <label class="form-check-label" for="tag5"> kitchen &nbsp;</label>
+                                    </div>
+
+
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" class="form-check-input" id="tag6" name="tag6"
+                                            value="household">
+                                        <label class="form-check-label" for="tag6"> household &nbsp;</label>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+
+                                <div style="display: flex" class="col-lg-8  col-xs-12 form-group form-check">
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="tag7" name="tag7"
+                                            value="history">
+                                        <label class="form-check-label" for="tag7"> history &nbsp; &nbsp;</label>
+                                    </div>
+
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" style=" flex-grow: 1;" class="form-check-input" id="tag8"
+                                            name="tag8" value="anatomy">
+                                        <label class="form-check-label" for="tag8"> anatomy &nbsp;</label>
+                                    </div>
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" class="form-check-input" id="tag9" name="tag9"
+                                            value="medicine">
+                                        <label class="form-check-label" for="tag9"> medicine &nbsp;</label>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex" class="col-lg-8  col-xs-12 form-group form-check">
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="tag4" name="tag10"
+                                            value="philosophy">
+                                        <label class="form-check-label" for="tag10"> philosophy &nbsp;</label>
+                                    </div>
+
+
+                                    <div style="margin-left:15px;">
+                                        <input type="checkbox" class="form-check-input" id="tag5" name="tag11"
+                                            value="culture and art">
+                                        <label class="form-check-label" for="tag11"> culture and art &nbsp;</label>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div style="display: flex" class="col-lg-8  col-xs-12 form-group form-check">
+
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="tag6" name="tag12"
+                                            value="science">
+                                        <label class="form-check-label" for="tag12"> science &nbsp;</label>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                                <br />
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="card-body d-flex p-0 mt-0">
+                                    <div
+                                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
+
+
+                                        <label>
+
+                                            <i class="font-md text-success feather-image me-2"></i>
+
+                                            <span class="d-none-xs">Photo</span>
+
+                                            <input type="file" style="display:none" id="Photofileupload"
+                                                accept="image/*" onchange="uploadFiles('files',false);" @*multiple*@
+                                                asp-for="@Model.post.imagePath" class="d-none-xs" name="files">
+
+                                        </label>
+
+
+
+                                    </div>
+
+                                    <div
+                                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
+
+                                        <label id="fileupload">
+
+                                            <i class="font-md text-danger feather-video me-2"></i>
+
+                                            <span class="d-none-xs">Video</span>
+
+                                            <input type="file" style="display:none" id="Videofileupload"
+                                                accept="video/mp4, video/ogg" onchange="uploadFiles('files',true);"
+                                                @*multiple*@ asp-for="@Model.post.videoPath" class="d-none-xs"
+                                                name="files">
+
+                                        </label>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </form>
+                        </div>
+
+
+
+                        @foreach (var item in Model.posts)
+                        {
+
+
+                        //@ViewBag.ReactionPostId=item.Id;
+
+                        <div id="@item.Id getAllPost" class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
+                            <div class="card-body p-0 d-flex">
+                                <figure class="avatar me-3"><img
+                                        src="images/UserProfileImage/@Html.DisplayFor(modelItem => item.UserIdForPostNavigation.UserFilepath)"
+                                        alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                <h4 class="fw-700 text-grey-900 font-xssss mt-1"> @Html.DisplayFor(modelItem =>
+                                    item.UserIdForPostNavigation.Username)
+                                    @foreach (var item2 in Model.posts)
+                                    {
+                                    <span
+                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">@Html.DisplayFor(modelItem
+                                        => item.PostDate)</span>
+
+                                    break;
+                                    }
+                                </h4>
+                                <a href="#" class="ms-auto" id="dropdownMenu2" data-bs-toggle="dropdown"
+                                    aria-expanded="false"><i
+                                        class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg"
+                                    aria-labelledby="dropdownMenu2">
+                                    <div class="card-body p-0 d-flex">
+                                        <i class="feather-bookmark text-grey-500 me-3 font-lg"></i>
+                                        <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">Save Link <span
+                                                class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">Add this to
+                                                your saved items</span></h4>
+                                    </div>
+                                    <div class="card-body p-0 d-flex mt-2">
+                                        <i class="feather-alert-circle text-grey-500 me-3 font-lg"></i>
+                                        <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">Hide Post <span
+                                                class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">Save to your
+                                                saved items</span></h4>
+                                    </div>
+                                    <div class="card-body p-0 d-flex mt-2">
+                                        <i class="feather-alert-octagon text-grey-500 me-3 font-lg"></i>
+                                        <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">Hide all from Group <span
+                                                class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">Save to your
+                                                saved items</span></h4>
+                                    </div>
+                                    <div class="card-body p-0 d-flex mt-2">
+                                        <i class="feather-lock text-grey-500 me-3 font-lg"></i>
+                                        <h4 class="fw-600 mb-0 text-grey-900 font-xssss mt-0 me-4">Unfollow Group <span
+                                                class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">Save to your
+                                                saved items</span></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="card-body p-0 me-lg-5" style=" display: flex; box-sizing: border-box;">
+                                <div class="fw-500 text-grey-500 lh-26 font-xssss w-100" style="flex: 1;">
+                                    @item.PostMessage
+
+                                    <br />
+                                    @foreach (var item2 in Model.postandTags)
+                                    {
+
+
+                                    @if (item.Id == item2.PostIdForPostandTag)
+                                    {
+
+                                    <span style="background-color:deepskyblue; color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle1)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue; color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle2)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle3)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle4)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle5)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle6)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle7)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle8)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle9)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle10)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle11)
+
+                                    </span>
+                                    <span style="background-color:deepskyblue;  color:white; margin-left:5px"
+                                        style="flex: 1;">
+
+                                        @Html.DisplayFor(modelItem => item2.TagIdForPostandTagNavigation.TagTitle12)
+
+                                    </span>
+                                    }
+
+
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-body d-block p-0">
+                                <div class="row ps-2 pe-2">
+                                    <div class="col-xs-4 col-sm-4 p-1">
+
+                                        @if (!string.IsNullOrEmpty(item.PostImage))
+                                        {
+
+                                        <a href="uploads/@Html.DisplayFor(modelItem => item.PostImage)"
+                                            data-lightbox="roadtrip">
+                                            <img src="uploads/@Html.DisplayFor(modelItem => item.PostImage)"
+                                                class="rounded-3 w-100" alt="image">
+                                        </a>
+
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(item.PostVideo))
+                                        {
+
+                                        <a href="uploads/@Html.DisplayFor(modelItem => item.PostVideo)"
+                                            data-lightbox="roadtrip">
+
+
+                                            <video width="400" controls>
+
+                                                @if (item.PostVideo.Contains(".mp4"))
+                                                {
+                                                <source src="uploads/@Html.DisplayFor(modelItem => item.PostVideo)"
+                                                    type="video/mp4">
+
+                                                }
+
+                                                @if (item.PostVideo.Contains(".ogg"))
+                                                {
+                                                <source src="uploads/@Html.DisplayFor(modelItem => item.PostVideo)"
+                                                    type="video/ogg">
+
+                                                }
+
+
+                                                Your browser does not support HTML video.
+
+
+
+                                            </video>
+
+                                        </a>
+
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-body d-flex p-0 mt-3">
+
+
+
+                                <br />
+
+                                <a id="@item.Id fillarea" href="#" style="visibility:hidden"
+                                    class="emoji-bttn d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2">
+                                    <i
+                                        class="feather-thumbs-up text-white bg-primary-gradiant me-1 btn-round-xs font-xss"></i>
+                                    <i class="feather-heart text-white bg-red-gradiant me-2 btn-round-xs font-xss"></i>
+
+
+                                </a>
+
+                                <div class="emoji-wrap" style="position:relative; width:300px; z-index:10">
+                                    <ul id="Reactions" class="emojis list-inline mb-0" style="float:right">
+
+                                        <form style="float:left;" name="form2_1" id="form2_1" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_1(@PostIdForReaction, @UserIdForReaction);"
+                                                class="emoji list-inline-item"><i class="em em---1"></i>
+
+                                                <input id="Reaction1" asp-for="@Model.reaction.Reaction1"
+                                                    style="display:none" value="like">
+
+
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_1</p>
+
+
+
+
+
+
+                                            </li>
+                                        </form>
+
+                                        <form style="float:left;" name="form2_2" id="form2_2" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_2(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-angry"></i>
+
+                                                <input id="Reaction2" asp-for="@Model.reaction.Reaction2"
+                                                    style="display:none" value="angry">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_2</p>
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_3" id="form2_3" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_3(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-anguished"></i>
+
+                                                <input id="Reaction3" asp-for="@Model.reaction.Reaction3"
+                                                    style="display:none" value="regretted">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_3</p>
+
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_4" id="form2_4" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_4(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-astonished"></i>
+
+                                                <input id="Reaction4" asp-for="@Model.reaction.Reaction4"
+                                                    style="display:none" value="astonished">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_4</p>
+
+
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_5" id="form2_5" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_5(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-blush"></i>
+
+                                                <input id="Reaction5" asp-for="@Model.reaction.Reaction5"
+                                                    style="display:none" value="blush">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_5</p>
+
+
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_6" id="form2_6" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_6(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-clap"></i>
+
+                                                <input id="Reaction6" asp-for="@Model.reaction.Reaction6"
+                                                    style="display:none" value="clap">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_6</p>
+
+
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_7" id="form2_7" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_7(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-cry"></i>
+
+                                                <input id="Reaction7" asp-for="@Model.reaction.Reaction7"
+                                                    style="display:none" value="cry">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_7</p>
+
+
+
+                                            </li>
+                                        </form>
+                                        <form style="float:left;" name="form2_8" id="form2_8" class="form-text"
+                                            data-ajax="true" data-ajax-method="post" asp-controller="Home"
+                                            asp-action="AddReaction" role="form" enctype="multipart/form-data">
+                                            <li style="cursor:pointer"
+                                                onclick="AddReaction_8(@PostIdForReaction, @UserIdForReaction)"
+                                                class="emoji list-inline-item"><i class="em em-full_moon_with_face"></i>
+
+
+                                                <input id="Reaction8" asp-for="@Model.reaction.Reaction8"
+                                                    style="display:none" value="smile">
+
+
+                                                <p style="display:inline"> @ViewBag.ReactionCount_8</p>
+
+
+
+                                            </li>
+                                        </form>
+
+                                    </ul>
+                                </div>
+                                <a href="#" id="@item.Id commentarea" style="visibility:hidden"
+                                    class="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss"><i
+                                        class="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i><span
+                                        class="d-none-xss">22 Comment</span></a>
+                                <a href="#"
+                                    class="ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss">
+                                    <span class="d-none-xs">
+
+                                        <form method="get" action="Home/GetCurrentPost"
+                                            id="@item.Id GetCurrentPostForm">
+
+                                            <input type="hidden" id="ReactionPostId" name="ReactionPostId"
+                                                value="@item.Id" />
+                                            <button id="fillandcomment" type="submit"
+                                                onclick="fillandcommentactive(@item.Id)" value="get post id"
+                                                style="background:none;">fill and comment
+
+                                            </button>
+
+                                        </form>
+
+                                    </span>
+                                </a>
+
+
+
+
+
+                            </div>
+
+
+
+
+                            <div id="@item.Id commenttextarea" style="display:none"
+                                class="card-body p-0 mt-3 position-relative">
+
+                                <form name="@item.Id form3" id="form3" class="form-text" method="post"
+                                    asp-controller="Home" asp-action="AddComment" role="form"
+                                    enctype="multipart/form-data">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <figure class="avatar position-absolute ms-2 mt-1 top-5">
+                                        <img src="~/images/UserProfileImage/@ViewBag.UserImage" alt="image"
+                                            class="shadow-sm rounded-circle w25 h25 z-depth-5"
+                                            data-holder-rendered="true">
+                                    </figure>
+
+                                    <input id="@item.Id CommentMessage" name="CommentMessage"
+                                        class="h100 bor-0 w-100 rounded-xxl p-20 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
+                                        , cols="30" , rows="10" , placeholder="What's on your mind?" />
+
+                                    @* @Html.TextBox("What's on your mind?",null, new
+                                    {@type="text",@id="CommentMessage",@name="CommentMessage",@class="h100 bor-0 w-100
+                                    rounded-xxl p-20 ps-5 font-xssss text-grey-500 fw-500 border-light-md
+                                    theme-dark-bg", @cols="30", @rows="10"})
+                                    *@
+                                    <br />
+                                    <div class="card-body p-0">
+
+                                        <button type="button"
+                                            style="background-color:transparent; border-color:transparent"
+                                            id="addCommentbtn"
+                                            onclick="AddComment(@PostIdForComment, @UserIdForComment, @item.Id)"
+                                            style="width:25%"
+                                            class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i
+                                                class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create
+                                            Comment</button>
+
+                                    </div>
+                                </form>
+                                <div class="card-body p-0 me-lg-5"
+                                    style="margin-left:auto; margin-right:auto; height:auto;  width:auto; box-sizing: border-box;">
+                                    <br />
+                                    @foreach (var itemcomment in Model.comments)
+                                    {
+
+                                    <div id="@itemcomment readcommentarea" style="float:left;"
+                                        class="fw-500 text-grey-500 lh-26 font-xssss w-100">
+
+
+
+                                        @if (itemcomment.PostIdForComment == item.Id)
+                                        {
+
+
+
+                                        <div
+                                            style="position:relative; float:left; width:100%; margin-bottom:10px; border-radius: 10px; background: rgb(0,212,255);  color:white; border: 2px solid rgb(0,212,255);">
+
+                                            <div style="margin-left:5px">
+
+                                                <img style="margin-right:5px"
+                                                    src="images/UserProfileImage/@Html.DisplayFor(modelItem => itemcomment.UserIdForCommentNavigation.UserFilepath)"
+                                                    alt="image" class="shadow-sm rounded-circle w45">
+                                                @Html.DisplayFor(modelItem =>
+                                                itemcomment.UserIdForCommentNavigation.Username)
+
+                                            </div>
+
+                                            <div style="margin-left:5px">
+                                                @Html.DisplayFor(modelItem => itemcomment.CommentDate)
+                                            </div>
+
+
+                                            <div style="margin-left:5px">
+                                                @Html.DisplayFor(modelItem => itemcomment.CommentMessage)
+                                            </div>
+
+
+
+                                        </div>
+                                        }
+
+                                    </div>
+
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                        }
+
+
+
+
+                        <div class="card w-100 text-center shadow-xss rounded-xxl border-0 p-4 mb-3 mt-3">
+                            <div class="snippet mt-2 ms-auto me-auto" data-title=".dot-typing">
+                                <div class="stage">
+                                    <div class="dot-typing"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-xl-4 col-xxl-3 col-lg-4 ps-lg-0">
+                        <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
+                            <div class="card-body d-flex align-items-center p-4">
+                                <h4 class="fw-700 mb-0 font-xssss text-grey-900">Friend Request</h4>
+                                <a href="default-member.html" class="fw-600 ms-auto font-xssss text-primary">See all</a>
+                            </div>
+                            <div class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0">
+                                <figure class="avatar me-3"><img src="~/uitheme.net/sociala/images/user-7.png"
+                                        alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                <h4 class="fw-700 text-grey-900 font-xssss mt-1">Anthony Daugloi <span
+                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual
+                                        friends</span></h4>
+                            </div>
+                            <div class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4">
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Confirm</a>
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl">Delete</a>
+                            </div>
+
+                            <div class="card-body d-flex pt-0 ps-4 pe-4 pb-0">
+                                <figure class="avatar me-3"><img src="~/uitheme.net/sociala/images/user-8.png"
+                                        alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                <h4 class="fw-700 text-grey-900 font-xssss mt-1">Mohannad Zitoun <span
+                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual
+                                        friends</span></h4>
+                            </div>
+                            <div class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4">
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Confirm</a>
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl">Delete</a>
+                            </div>
+
+                            <div class="card-body d-flex pt-0 ps-4 pe-4 pb-0">
+                                <figure class="avatar me-3"><img src="~/uitheme.net/sociala/images/user-12.png"
+                                        alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                <h4 class="fw-700 text-grey-900 font-xssss mt-1">Mohannad Zitoun <span
+                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual
+                                        friends</span></h4>
+                            </div>
+                            <div class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4">
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Confirm</a>
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl">Delete</a>
+                            </div>
+                        </div>
+
+                        <div id="activeUsers" class="card w-100 shadow-xss rounded-xxl border-0 p-0 ">
+                            <div class="card-body d-flex align-items-center p-4 mb-0">
+                                <h4 class="fw-700 mb-0 font-xssss text-grey-900">Confirm Friend</h4>
+                                <a href="default-member.html" class="fw-600 ms-auto font-xssss text-primary">See all</a>
+                            </div>
+                            @* @foreach (var item in Model.ActiveUsers)
+                            {
+
+
+                            <div class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0">
+                                <figure class="avatar me-3"><img src="~/Images/UserProfileImage/@item.ProfilePicture"
+                                        alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                <h4 class="fw-700 text-grey-900 font-xssss mt-1">@item.UserName <span
+                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual
+                                        friends</span></h4>
+                            </div>
+                            <div class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4">
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Send</a>
+                                <a href="#"
+                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl">Delete</a>
+                            </div>
+
+                            }*@
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- main content -->
+    <!-- right chat -->
+    <div class="right-chat nav-wrap mt-2 right-scroll-bar">
+        <div class="middle-sidebar-right-content bg-white shadow-xss rounded-xxl">
+
+            <!-- loader wrapper -->
+            <div class="preloader-wrap p-3">
+                <div class="box shimmer">
+                    <div class="lines">
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                    </div>
+                </div>
+                <div class="box shimmer mb-3">
+                    <div class="lines">
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                    </div>
+                </div>
+                <div class="box shimmer">
+                    <div class="lines">
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                        <div class="line s_shimmer"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- loader wrapper -->
+
+            <div class="section full pe-3 ps-4 pt-4 position-relative feed-body">
+                <h4 class="font-xsssss text-grey-500 text-uppercase fw-700 ls-3">CONTACTS</h4>
+                <ul id="allUsers" class="list-group list-group-flush">
+                    @* @foreach (var item in Model.AllUsers)
+                    {
+                    <li
+                        class="bg-transparent list-group-item no-icon pe-0 ps-0 pt-2 pb-2 border-0 d-flex align-items-center">
+                        <figure class="avatar float-left mb-0 me-2">
+                            <img src="~/Images//UserProfileImage/@item.ProfilePicture" alt="image" class="w35">
+                        </figure>
+                        <h3 class="fw-700 mb-0 mt-0">
+                            <a class="font-xssss text-grey-600 d-block text-dark model-popup-chat"
+                                href="#">@item.UserName</a>
+                        </h3>
+                        <span class="badge badge-primary text-white badge-pill fw-500 mt-0">2</span>
+                    </li>
+                    }*@
+
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- right chat -->
+
+    <div class="app-footer border-0 shadow-lg bg-primary-gradiant">
+        <a href="default.html" class="nav-content-bttn nav-center"><i class="feather-home"></i></a>
+        <a href="default-video.html" class="nav-content-bttn"><i class="feather-package"></i></a>
+        <a href="default-live-stream.html" class="nav-content-bttn" data-tab="chats"><i class="feather-layout"></i></a>
+        <a href="shop-2.html" class="nav-content-bttn"><i class="feather-layers"></i></a>
+        <a href="default-settings.html" class="nav-content-bttn"><img
+                src="~/uitheme.net/sociala/images/female-profile.png" alt="user" class="w30 shadow-xss"></a>
+    </div>
+
+    <div class="app-header-search">
+        <form class="search-form">
+            <div class="form-group searchbox mb-0 border-0 p-1">
+                <input type="text" class="form-control border-0" placeholder="Search...">
+                <i class="input-icon">
+                    <ion-icon name="search-outline" role="img" class="md hydrated" aria-label="search outline">
+                    </ion-icon>
+                </i>
+                <a href="#" class="ms-1 mt-1 d-inline-block close searchbox-close">
+                    <i class="ti-close font-xs"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div class="modal bottom side fade" id="Modalstory" tabindex="-1" role="dialog" style=" overflow-y: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent">
+            <button type="button" class="close mt-0 position-absolute top--30 right--10" data-dismiss="modal"
+                aria-label="Close"><i class="ti-close text-grey-900 font-xssss"></i></button>
+            <div class="modal-body p-0">
+                <div class="card w-100 border-0 rounded-3 overflow-hidden bg-gradiant-bottom bg-gradiant-top">
+                    <div class="owl-carousel owl-theme dot-style3 story-slider owl-dot-nav nav-none">
+                        <div class="item"><img src="~/uitheme.net/sociala/images/story-5.jpg" alt="image"></div>
+                        <div class="item"><img src="~/uitheme.net/sociala/images/story-6.jpg" alt="image"></div>
+                        <div class="item"><img src="~/uitheme.net/sociala/images/story-7.jpg" alt="image"></div>
+                        <div class="item"><img src="~/uitheme.net/sociala/images/story-8.jpg" alt="image"></div>
+
+                    </div>
+                </div>
+                <div class="form-group mt-3 mb-0 p-3 position-absolute bottom-0 z-index-1 w-100">
+                    <input type="text"
+                        class="style2-input w-100 bg-transparent border-light-md p-3 pe-5 font-xssss fw-500 text-white"
+                        value="Write Comments">
+                    <span class="feather-send text-white font-md text-white position-absolute"
+                        style="bottom: 35px;right:30px;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="chatbox" style="display:none;" class="modal-popup-chat">
+    <div id="chatboxinside" class="modal-popup-wrap bg-white p-0 shadow-lg rounded-3">
+
+
+
+
+        <div class="modal-popup-header w-100 border-bottom">
+            <div class="card p-3 d-block border-0 d-block">
+
+
+
+
+
+                <figure class="avatar mb-0 float-left me-2">
+                    <img id="ReceiverUserImage" src="" class="w35 me-1">
+                </figure>
+
+
+
+                <h5 id="ReceiverUserName"  onclick="GetMessage('@ViewBag.UserImage','@ViewBag.orginaluserid ');" class="fw-700 text-primary font-xssss mt-1 mb-1"></h5>
+                <h4 id="ReceiverOnlinestatus" class="text-grey-500 font-xsssss mt-0 mb-0">
+
+                </h4>
+                <a onclick="document.getElementById('chatbox').style.display='none'" href="#"
+                    class="font-xssss position-absolute right-0 top-0 mt-3 me-4"><i
+                        class="ti-close text-grey-900 mt-2 d-inline-block"></i></a>
+            </div>
+
+
+
+            <div style="overflow-y: scroll; max-height:250px" id="chatmesagearea" class="modal-popup-body w-100 p-3 h-auto">
+
+                
+               
+
+
+                        <div id="sendertext" class="message">
+                    
+                        </div>
+                    
+
+                 
+                        <div  class="date-break font-xsssss lh-24 fw-500 text-grey-500 mt-2 mb-2">Mon 10:20am</div>
+
+                           <div id="receivertext" class="message self text-right mt-2"> </div>
+                    
+                
+                    <div class="snippet pt-3 ps-4 pb-2 pe-3 mt-2 bg-grey rounded-xl float-right" data-title=".dot-typing">
+                        <div class="stage">
+                            <div class="dot-typing"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                
+            </div>
+            <div class="modal-popup-footer w-100 border-top">
+                <form name="chatform" id="chatform" class="form-text" method="post" asp-controller="Home"
+                    asp-action="AddMessage" role="form" enctype="multipart/form-data">
+                    <div class="card p-3 d-block border-0 d-block">
+                        <div class="form-group icon-right-input style1-input mb-0">
+                            <input id="chattextarea" type="text" placeholder="Start typing.."
+                                class="form-control rounded-xl bg-greylight border-0 font-xssss fw-500 ps-3">
+                            <i style="cursor:pointer" id="sendmessage"
+                                onclick="AddMessage('@ViewBag.SenderId', '@ViewBag.ReceiverId')"
+                                class="feather-send text-grey-500 font-md"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

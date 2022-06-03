@@ -1,0 +1,7 @@
+{
+  
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=DESKTOP-JGUKKG5;User ID=sa; Password=admin1234;Initial Catalog=SocialaDb;Integrated Security=True;"
+  }
+
+}
